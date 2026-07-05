@@ -80,3 +80,41 @@ describe('usePlayerStore — Task 2 (top song navigation)', () => {
     expect(usePlayerStore.getState().isPlaying).toBe(true)
   })
 })
+
+describe('usePlayerStore — Task 3 (artist mode)', () => {
+  it('selectArtist sets selectedArtist/selectedArtistIndex, does not change mode/play state', () => {
+    usePlayerStore.getState().selectArtist('amee', 1)
+    const state = usePlayerStore.getState()
+    expect(state.selectedArtist).toBe('amee')
+    expect(state.selectedArtistIndex).toBe(1)
+    expect(state.isPlaying).toBe(false)
+  })
+
+  it('playArtistSong sets mode to artist, sets indices, starts playing', () => {
+    usePlayerStore.getState().playArtistSong(6, 0)
+    const state = usePlayerStore.getState()
+    expect(state.mode).toBe('artist')
+    expect(state.artistSongGlobalIndex).toBe(6)
+    expect(state.artistSongPosition).toBe(0)
+    expect(state.isPlaying).toBe(true)
+  })
+
+  it('nextArtistSong advances position and wraps within the filtered list length', () => {
+    usePlayerStore.setState({ mode: 'artist', artistSongPosition: 0 })
+    usePlayerStore.getState().nextArtistSong([6, 7, 8, 9])
+    expect(usePlayerStore.getState().artistSongPosition).toBe(1)
+    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(7)
+
+    usePlayerStore.setState({ artistSongPosition: 3 })
+    usePlayerStore.getState().nextArtistSong([6, 7, 8, 9])
+    expect(usePlayerStore.getState().artistSongPosition).toBe(0)
+    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(6)
+  })
+
+  it('prevArtistSong retreats position and wraps to the end', () => {
+    usePlayerStore.setState({ mode: 'artist', artistSongPosition: 0 })
+    usePlayerStore.getState().prevArtistSong([6, 7, 8, 9])
+    expect(usePlayerStore.getState().artistSongPosition).toBe(3)
+    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(9)
+  })
+})

@@ -1,14 +1,14 @@
 import { useEffect, useRef } from 'react'
 import { usePlayerStore } from '../stores/player.store'
 import { topSongs } from '../data/topSongs'
+import { songs } from '../data/songs'
 
 export function usePlayerEngine() {
   const state = usePlayerStore()
   const audioRef = useRef<HTMLAudioElement>(null)
 
-  // Task 1 only knows about "top" mode; later tasks extend this as
-  // artist/another modes are implemented.
-  const currentSong = topSongs[state.topSongIndex]
+  // "another" mode is added in a later task.
+  const currentSong = state.mode === 'artist' ? songs[state.artistSongGlobalIndex] : topSongs[state.topSongIndex]
 
   useEffect(() => {
     const audio = audioRef.current

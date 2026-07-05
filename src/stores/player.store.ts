@@ -1,5 +1,6 @@
 import { create } from 'zustand'
 import { initialPlayerState, type PlayerState } from '../types/player'
+import type { ArtistId } from '../types/song'
 
 interface PlayerActions {
   togglePlay: () => void
@@ -11,6 +12,10 @@ interface PlayerActions {
   playTopSong: (index: number) => void
   nextTopSong: (length: number) => void
   prevTopSong: (length: number) => void
+  selectArtist: (artist: ArtistId, artistIndex: number) => void
+  playArtistSong: (songIndex: number, position: number) => void
+  nextArtistSong: (songIndices: number[]) => void
+  prevArtistSong: (songIndices: number[]) => void
 }
 
 export const usePlayerStore = create<PlayerState & PlayerActions>((set) => ({
@@ -27,4 +32,17 @@ export const usePlayerStore = create<PlayerState & PlayerActions>((set) => ({
     set((state) => ({ mode: 'top', topSongIndex: (state.topSongIndex + 1) % length, isPlaying: true })),
   prevTopSong: (length) =>
     set((state) => ({ mode: 'top', topSongIndex: (state.topSongIndex - 1 + length) % length, isPlaying: true })),
+  selectArtist: (artist, artistIndex) => set({ selectedArtist: artist, selectedArtistIndex: artistIndex }),
+  playArtistSong: (songIndex, position) =>
+    set({ mode: 'artist', artistSongGlobalIndex: songIndex, artistSongPosition: position, isPlaying: true }),
+  nextArtistSong: (songIndices) =>
+    set((state) => {
+      const nextPos = (state.artistSongPosition + 1) % songIndices.length
+      return { mode: 'artist', artistSongPosition: nextPos, artistSongGlobalIndex: songIndices[nextPos], isPlaying: true }
+    }),
+  prevArtistSong: (songIndices) =>
+    set((state) => {
+      const prevPos = (state.artistSongPosition - 1 + songIndices.length) % songIndices.length
+      return { mode: 'artist', artistSongPosition: prevPos, artistSongGlobalIndex: songIndices[prevPos], isPlaying: true }
+    }),
 }))
