@@ -26,7 +26,7 @@ export function Header() {
   return (
     <header className="relative flex items-center justify-between">
       <div className="flex items-center gap-2.5 rounded-[10px] border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-xl">
-        <i className="fa-regular fa-magnifying-glass text-white/60" />
+        <i className="fa-solid fa-magnifying-glass text-white/60" />
         <input
           type="text"
           placeholder="Search song or artist"

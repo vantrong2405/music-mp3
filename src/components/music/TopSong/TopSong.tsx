@@ -31,11 +31,8 @@ export function TopSong() {
                 onClick={() => state.playTopSong(index)}
               >
                 <div className="flex">
-                  <div className="mt-2.5 font-bold text-white/40">
+                  <div className="mt-2.5 mr-3.75 font-bold text-white/40">
                     {isActive ? <img className="h-5 w-5" src="/icon/wave.gif" alt="" /> : index + 1}
-                  </div>
-                  <div className="mx-3.75 mt-2.5 font-bold text-white/60">
-                    <i className="fa-regular fa-heart" />
                   </div>
                   <div>
                     <div className="font-semibold text-[#f8fafc]">{song.nameSong}</div>
