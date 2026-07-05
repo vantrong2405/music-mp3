@@ -44,7 +44,7 @@ export function PlayerBar() {
             style={{ color: state.isRandom ? 'green' : 'black' }}
             onClick={toggleRandom}
           >
-            <i className="fa-light fa-shuffle" />
+            <i className="fa-solid fa-shuffle" />
           </div>
           <div
             data-testid="back"
@@ -59,7 +59,7 @@ export function PlayerBar() {
             style={{ color: 'rgb(5, 165, 67)' }}
             onClick={() => state.togglePlay()}
           >
-            <i className={state.isPlaying ? 'fa-sharp fa-solid fa-circle-pause' : 'fa-solid fa-circle-play'} />
+            <i className={state.isPlaying ? 'fa-solid fa-circle-pause' : 'fa-solid fa-circle-play'} />
           </div>
           <div
             data-testid="next"
@@ -74,7 +74,7 @@ export function PlayerBar() {
             style={{ color: state.isRepeat ? 'green' : 'black' }}
             onClick={() => state.toggleRepeat()}
           >
-            <i className="fa-light fa-arrows-repeat" />
+            <i className="fa-solid fa-repeat" />
           </div>
         </div>
 

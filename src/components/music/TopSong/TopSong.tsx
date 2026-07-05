@@ -35,7 +35,7 @@ export function TopSong() {
                     {isActive ? <img className="h-5 w-5" src="/icon/wave.gif" alt="" /> : index + 1}
                   </div>
                   <div className="mx-3.75 mt-2.5 font-bold">
-                    <i className="fa-light fa-heart" />
+                    <i className="fa-regular fa-heart" />
                   </div>
                   <div>
                     <div className="font-bold">{song.nameSong}</div>
