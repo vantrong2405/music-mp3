@@ -16,9 +16,18 @@ interface PlayerActions {
   playArtistSong: (songIndex: number, position: number) => void
   nextArtistSong: (songIndices: number[]) => void
   prevArtistSong: (songIndices: number[]) => void
+  setAnotherPool: (pool: number[]) => void
+  playAnotherSong: (position: number) => void
+  nextAnotherSong: () => void
+  prevAnotherSong: () => void
+  /** Mode-aware dispatcher: figures out which "next" the current mode needs. */
+  nextSong: (topSongsLength: number, artistSongIndices: number[]) => void
+  prevSong: (topSongsLength: number, artistSongIndices: number[]) => void
+  toggleRandom: (queue: number[]) => void
+  randomAdvance: () => void
 }
 
-export const usePlayerStore = create<PlayerState & PlayerActions>((set) => ({
+export const usePlayerStore = create<PlayerState & PlayerActions>((set, get) => ({
   ...initialPlayerState,
 
   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
@@ -45,4 +54,39 @@ export const usePlayerStore = create<PlayerState & PlayerActions>((set) => ({
       const prevPos = (state.artistSongPosition - 1 + songIndices.length) % songIndices.length
       return { mode: 'artist', artistSongPosition: prevPos, artistSongGlobalIndex: songIndices[prevPos], isPlaying: true }
     }),
+  setAnotherPool: (pool) => set({ anotherSongPool: pool }),
+  playAnotherSong: (position) => set({ mode: 'another', anotherSongPosition: position, isPlaying: true }),
+  nextAnotherSong: () =>
+    set((state) => ({
+      mode: 'another',
+      anotherSongPosition: (state.anotherSongPosition + 1) % state.anotherSongPool.length,
+      isPlaying: true,
+    })),
+  prevAnotherSong: () =>
+    set((state) => ({
+      mode: 'another',
+      anotherSongPosition: (state.anotherSongPosition - 1 + state.anotherSongPool.length) % state.anotherSongPool.length,
+      isPlaying: true,
+    })),
+  nextSong: (topSongsLength, artistSongIndices) => {
+    const { mode, nextTopSong, nextArtistSong, nextAnotherSong } = get()
+    if (mode === 'top') return nextTopSong(topSongsLength)
+    if (mode === 'artist') return nextArtistSong(artistSongIndices)
+    return nextAnotherSong()
+  },
+  prevSong: (topSongsLength, artistSongIndices) => {
+    const { mode, prevTopSong, prevArtistSong, prevAnotherSong } = get()
+    if (mode === 'top') return prevTopSong(topSongsLength)
+    if (mode === 'artist') return prevArtistSong(artistSongIndices)
+    return prevAnotherSong()
+  },
+  toggleRandom: (queue) =>
+    set((state) =>
+      state.isRandom ? { isRandom: false } : { isRandom: true, randomQueue: queue, randomPosition: 0 },
+    ),
+  randomAdvance: () =>
+    set((state) => ({
+      randomPosition: (state.randomPosition + 1) % state.randomQueue.length,
+      isPlaying: true,
+    })),
 }))

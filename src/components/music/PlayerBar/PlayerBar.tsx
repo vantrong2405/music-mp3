@@ -1,9 +1,8 @@
 import { usePlayerEngine } from '../../../hooks/usePlayerEngine'
 import { formatTimer } from '../../../utils/formatTimer'
-import { topSongs } from '../../../data/topSongs'
 
 export function PlayerBar() {
-  const { state, audioRef, currentSong } = usePlayerEngine()
+  const { state, audioRef, currentSong, next, prev, toggleRandom } = usePlayerEngine()
 
   const handleSeek = (e: React.ChangeEvent<HTMLInputElement>) => {
     const audio = audioRef.current
@@ -12,7 +11,7 @@ export function PlayerBar() {
 
   return (
     <div className="fixed bottom-0 left-0 flex w-full flex-col items-center justify-center bg-linear-to-r from-[rgba(225,237,250,1)] to-[rgba(247,238,242,1)]">
-      <div className="mt-0 flex w-1/2 justify-between">
+      <div className="mt-0 flex w-1/2 justify-between max-[46.1875em]:w-full">
         <div className="mt-3.25 ml-2.5">{formatTimer(audioRef.current?.currentTime ?? 0)}</div>
         <input
           type="range"
@@ -28,24 +27,29 @@ export function PlayerBar() {
       <audio ref={audioRef} />
 
       <div className="flex w-full justify-between">
-        <div className="ml-5 my-1.25 flex w-75">
+        <div className="ml-5 my-1.25 flex w-75 max-[46.1875em]:mr-1.25 max-[46.1875em]:w-auto">
           <div className="mr-5">
             <img className="h-12.5 w-12.5 rounded-[10px] object-cover" src={`/img/${currentSong.img}`} alt="" />
           </div>
-          <div>
+          <div className="max-[46.1875em]:hidden">
             <div className="font-bold">{currentSong.nameSong}</div>
             <div>{currentSong.nameArtist}</div>
           </div>
         </div>
 
         <div className="mt-2.5 mr-25 flex">
-          <div className="mt-2 mr-8.75 text-[1.3rem]" style={{ color: state.isRandom ? 'green' : 'black' }}>
+          <div
+            data-testid="random"
+            className="mt-2 mr-8.75 cursor-pointer text-[1.3rem]"
+            style={{ color: state.isRandom ? 'green' : 'black' }}
+            onClick={toggleRandom}
+          >
             <i className="fa-light fa-shuffle" />
           </div>
           <div
             data-testid="back"
             className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-[#3e4042]"
-            onClick={() => state.prevTopSong(topSongs.length)}
+            onClick={prev}
           >
             <i className="fa-solid fa-backward-fast" />
           </div>
@@ -60,7 +64,7 @@ export function PlayerBar() {
           <div
             data-testid="next"
             className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-[#3e4042]"
-            onClick={() => state.nextTopSong(topSongs.length)}
+            onClick={next}
           >
             <i className="fa-solid fa-forward-fast" />
           </div>
@@ -74,7 +78,7 @@ export function PlayerBar() {
           </div>
         </div>
 
-        <div className="mt-3.75 mr-2.5 flex">
+        <div className="mt-3.75 mr-2.5 flex max-[46.1875em]:hidden">
           <div
             data-testid="vol-icon"
             className="mt-0.75 mr-2.5 cursor-pointer text-[1.2rem]"
