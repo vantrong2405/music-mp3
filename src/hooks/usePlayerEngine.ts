@@ -4,6 +4,7 @@ import { topSongs } from '../data/topSongs'
 import { songs } from '../data/songs'
 import { pickRandomSubset } from '../utils/shuffle'
 import { selectArtistSongIndices } from '../utils/navigation'
+import { resolveSongAudioSrc } from '../utils/media'
 
 export function usePlayerEngine() {
   const state = usePlayerStore()
@@ -22,7 +23,7 @@ export function usePlayerEngine() {
   useEffect(() => {
     const audio = audioRef.current
     if (!audio || !currentSong) return
-    audio.src = `/musics/${currentSong.nameFile}`
+    audio.src = resolveSongAudioSrc(currentSong)
   }, [currentSong])
 
   useEffect(() => {

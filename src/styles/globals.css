@@ -6,30 +6,56 @@
 
 body {
   font-family: 'Poppins', sans-serif;
+  margin: 0;
+  background: #101112;
 }
 
 .font-heading {
   font-family: 'Righteous', cursive;
 }
 
+.player-icon-button {
+  display: inline-flex;
+  width: 2.5rem;
+  height: 2.5rem;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.5rem;
+  transition:
+    background-color 0.2s ease,
+    color 0.2s ease;
+}
+
+.player-icon-button:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.player-icon-button:focus {
+  outline: none;
+  box-shadow:
+    0 0 0 2px #101112,
+    0 0 0 4px rgba(119, 217, 112, 0.72);
+}
+
 /* Custom range input thumb/track (play seek bar + volume bar) — light thumb
    on a translucent track so it stays visible on the dark glass background. */
 input[type='range']::-webkit-slider-runnable-track {
   width: 300px;
-  height: 2px;
+  height: 4px;
   border: none;
-  border-radius: 3px;
-  background: rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
 }
 
 input[type='range']::-webkit-slider-thumb {
   -webkit-appearance: none;
   appearance: none;
-  border: 2px solid #22c55e;
-  height: 12px;
-  width: 12px;
-  border-radius: 510%;
-  background: #f8fafc;
+  border: 2px solid #101112;
+  height: 14px;
+  width: 14px;
+  border-radius: 999px;
+  background: #77d970;
   margin-top: -5px;
   cursor: pointer;
 }
@@ -37,13 +63,11 @@ input[type='range']::-webkit-slider-thumb {
 /* Top-song thumbnail spin animation (play = spinning, pause = settle) */
 .rotate-play {
   animation: rotatePlay 10s linear 0s infinite normal none running;
-  border-radius: 50% !important;
   transition: 0.3s;
 }
 
 .rotate-pause {
   animation: rotatePause 0.5s ease 0s 1 normal forwards running;
-  border-radius: 50% !important;
   transition: 0.3s;
 }
 

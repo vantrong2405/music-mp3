@@ -7,30 +7,25 @@ import { Header } from '../components/music/Header/Header'
 
 function App() {
   return (
-    <div id="allPage" className="relative min-h-screen overflow-hidden bg-[#0F0F23] p-5 pb-24">
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-40 -left-40 h-100 w-100 rounded-full bg-[#4338CA] opacity-25 blur-3xl"
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -right-40 top-40 h-100 w-100 rounded-full bg-[#22c55e] opacity-15 blur-3xl"
-      />
+    <div id="allPage" className="min-h-screen bg-[#101112] px-4 pt-4 pb-44 text-[#f4f0e8] sm:px-6 lg:px-8">
+      <div className="mx-auto grid max-w-7xl grid-cols-[220px_minmax(0,1fr)_320px] gap-4 max-[63.75em]:grid-cols-[190px_minmax(0,1fr)] max-[46.1875em]:grid-cols-1">
+        <aside className="rounded-lg border border-white/10 bg-[#181a1b] p-3 max-[46.1875em]:hidden">
+          <div className="mb-4 border-b border-white/10 px-2 pb-3">
+            <p className="text-xs font-bold tracking-[0.28em] text-[#f5c76b] uppercase">MP3 Studio</p>
+            <h1 className="mt-2 text-xl font-black text-white">Vietnam Hits</h1>
+          </div>
+          <ListArtist />
+        </aside>
 
-      <div className="relative flex justify-center gap-5 max-[46.1875em]:flex-col">
-        <div className="w-180 rounded-2xl border border-white/10 bg-white/5 p-6.25 shadow-lg backdrop-blur-xl max-[46.1875em]:w-full max-[46.1875em]:p-3.75">
+        <main className="min-w-0 rounded-lg border border-white/10 bg-[#161718] p-4 shadow-[0_18px_60px_rgba(0,0,0,0.26)] max-[46.1875em]:p-3">
           <Header />
           <TopSong />
-          <div className="max-[46.1875em]:hidden">
-            <RecentPlayed />
-          </div>
-        </div>
-        <div className="w-70 rounded-2xl border border-white/10 bg-white/5 p-6.25 shadow-lg backdrop-blur-xl max-[46.1875em]:w-full max-[46.1875em]:p-3.75">
-          <div className="max-[46.1875em]:hidden">
-            <ListArtist />
-          </div>
+          <RecentPlayed />
+        </main>
+
+        <aside className="rounded-lg border border-white/10 bg-[#181a1b] p-4 max-[63.75em]:col-span-2 max-[46.1875em]:col-span-1">
           <AnotherSong />
-        </div>
+        </aside>
       </div>
       <PlayerBar />
     </div>

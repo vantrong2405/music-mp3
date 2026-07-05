@@ -20,9 +20,9 @@ describe('ListArtist', () => {
 
   it('clicking an artist selects it in the store', () => {
     render(<ListArtist />)
-    fireEvent.click(screen.getByText('AMEE'))
+    fireEvent.click(screen.getByText('The Weeknd'))
     const state = usePlayerStore.getState()
-    expect(state.selectedArtist).toBe('amee')
+    expect(state.selectedArtist).toBe('weeknd')
     expect(state.selectedArtistIndex).toBe(1)
   })
 

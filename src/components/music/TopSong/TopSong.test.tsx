@@ -4,6 +4,7 @@ import { TopSong } from './TopSong'
 import { usePlayerStore } from '../../../stores/player.store'
 import { initialPlayerState } from '../../../types/player'
 import { topSongs } from '../../../data/topSongs'
+import { resolveMediaSrc } from '../../../utils/media'
 
 beforeEach(() => {
   usePlayerStore.setState(initialPlayerState)
@@ -20,7 +21,7 @@ describe('TopSong', () => {
   it('clicking a row plays that song', () => {
     render(<TopSong />)
     fireEvent.click(screen.getByText(topSongs[2].nameSong))
-    expect(screen.getByTestId('top-thumb')).toHaveAttribute('src', `/img/${topSongs[2].img}`)
+    expect(screen.getByTestId('top-thumb')).toHaveAttribute('src', resolveMediaSrc(topSongs[2].img, '/img'))
     expect(usePlayerStore.getState().topSongIndex).toBe(2)
   })
 

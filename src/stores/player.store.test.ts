@@ -3,6 +3,7 @@ import { usePlayerStore } from './player.store'
 import { initialPlayerState } from '../types/player'
 
 beforeEach(() => {
+  localStorage.clear()
   usePlayerStore.setState(initialPlayerState)
 })
 
@@ -83,38 +84,53 @@ describe('usePlayerStore — Task 2 (top song navigation)', () => {
 
 describe('usePlayerStore — Task 3 (artist mode)', () => {
   it('selectArtist sets selectedArtist/selectedArtistIndex, does not change mode/play state', () => {
-    usePlayerStore.getState().selectArtist('amee', 1)
+    usePlayerStore.getState().selectArtist('weeknd', 1)
     const state = usePlayerStore.getState()
-    expect(state.selectedArtist).toBe('amee')
+    expect(state.selectedArtist).toBe('weeknd')
     expect(state.selectedArtistIndex).toBe(1)
     expect(state.isPlaying).toBe(false)
   })
 
   it('playArtistSong sets mode to artist, sets indices, starts playing', () => {
-    usePlayerStore.getState().playArtistSong(6, 0)
+    usePlayerStore.getState().playArtistSong(4, 0)
     const state = usePlayerStore.getState()
     expect(state.mode).toBe('artist')
-    expect(state.artistSongGlobalIndex).toBe(6)
+    expect(state.artistSongGlobalIndex).toBe(4)
     expect(state.artistSongPosition).toBe(0)
     expect(state.isPlaying).toBe(true)
   })
 
   it('nextArtistSong advances position and wraps within the filtered list length', () => {
     usePlayerStore.setState({ mode: 'artist', artistSongPosition: 0 })
-    usePlayerStore.getState().nextArtistSong([6, 7, 8, 9])
+    usePlayerStore.getState().nextArtistSong([4, 5, 6, 7])
     expect(usePlayerStore.getState().artistSongPosition).toBe(1)
-    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(7)
+    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(5)
 
     usePlayerStore.setState({ artistSongPosition: 3 })
-    usePlayerStore.getState().nextArtistSong([6, 7, 8, 9])
+    usePlayerStore.getState().nextArtistSong([4, 5, 6, 7])
     expect(usePlayerStore.getState().artistSongPosition).toBe(0)
-    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(6)
+    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(4)
   })
 
   it('prevArtistSong retreats position and wraps to the end', () => {
     usePlayerStore.setState({ mode: 'artist', artistSongPosition: 0 })
-    usePlayerStore.getState().prevArtistSong([6, 7, 8, 9])
+    usePlayerStore.getState().prevArtistSong([4, 5, 6, 7])
     expect(usePlayerStore.getState().artistSongPosition).toBe(3)
-    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(9)
+    expect(usePlayerStore.getState().artistSongGlobalIndex).toBe(7)
+  })
+})
+
+describe('usePlayerStore — favorites', () => {
+  it('adds and removes a favorite song id', () => {
+    usePlayerStore.getState().toggleFavorite('weeknd/blinding-lights.m4a')
+    expect(usePlayerStore.getState().favoriteSongIds).toEqual(['weeknd/blinding-lights.m4a'])
+
+    usePlayerStore.getState().toggleFavorite('weeknd/blinding-lights.m4a')
+    expect(usePlayerStore.getState().favoriteSongIds).toEqual([])
+  })
+
+  it('persists favorites to localStorage', () => {
+    usePlayerStore.getState().toggleFavorite('dualipa/levitating.m4a')
+    expect(localStorage.getItem('music-mp3:favorites')).toBe(JSON.stringify(['dualipa/levitating.m4a']))
   })
 })

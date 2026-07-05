@@ -2,6 +2,25 @@ import { create } from 'zustand'
 import { initialPlayerState, type PlayerState } from '../types/player'
 import type { ArtistId } from '../types/song'
 
+const FAVORITES_STORAGE_KEY = 'music-mp3:favorites'
+
+function readStoredFavoriteSongIds() {
+  if (typeof localStorage === 'undefined') return []
+
+  try {
+    const storedValue = localStorage.getItem(FAVORITES_STORAGE_KEY)
+    const parsedValue = storedValue ? JSON.parse(storedValue) : []
+    return Array.isArray(parsedValue) ? parsedValue.filter((value) => typeof value === 'string') : []
+  } catch {
+    return []
+  }
+}
+
+function storeFavoriteSongIds(songIds: string[]) {
+  if (typeof localStorage === 'undefined') return
+  localStorage.setItem(FAVORITES_STORAGE_KEY, JSON.stringify(songIds))
+}
+
 interface PlayerActions {
   togglePlay: () => void
   setPlaying: (playing: boolean) => void
@@ -25,10 +44,12 @@ interface PlayerActions {
   prevSong: (topSongsLength: number, artistSongIndices: number[]) => void
   toggleRandom: (queue: number[]) => void
   randomAdvance: () => void
+  toggleFavorite: (songId: string) => void
 }
 
 export const usePlayerStore = create<PlayerState & PlayerActions>((set, get) => ({
   ...initialPlayerState,
+  favoriteSongIds: readStoredFavoriteSongIds(),
 
   togglePlay: () => set((state) => ({ isPlaying: !state.isPlaying })),
   setPlaying: (playing) => set({ isPlaying: playing }),
@@ -89,4 +110,13 @@ export const usePlayerStore = create<PlayerState & PlayerActions>((set, get) => 
       randomPosition: (state.randomPosition + 1) % state.randomQueue.length,
       isPlaying: true,
     })),
+  toggleFavorite: (songId) =>
+    set((state) => {
+      const favoriteSongIds = state.favoriteSongIds.includes(songId)
+        ? state.favoriteSongIds.filter((favoriteSongId) => favoriteSongId !== songId)
+        : [...state.favoriteSongIds, songId]
+
+      storeFavoriteSongIds(favoriteSongIds)
+      return { favoriteSongIds }
+    }),
 }))

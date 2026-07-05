@@ -1,40 +1,40 @@
 import { usePlayerStore } from '../../../stores/player.store'
 import { artists } from '../../../data/artists'
+import { resolveMediaSrc } from '../../../utils/media'
 
 export function ListArtist() {
   const state = usePlayerStore()
 
   return (
-    <>
-      <h3 className="font-heading mt-10 bg-gradient-to-r from-[#f8fafc] to-[#a5b4fc] bg-clip-text text-transparent">
-        Recent Singers
-      </h3>
-      <div>
+    <section>
+      <h2 className="mb-2 px-2 text-xs font-bold tracking-[0.22em] text-white/40 uppercase">Artists</h2>
+      <div className="flex flex-col gap-1">
         {artists.map((artist, index) => {
           const isSelected = state.selectedArtistIndex === index
           return (
-            <div
+            <button
+              type="button"
               key={artist.id}
               data-testid="artist-row"
-              className={`my-2.5 flex min-w-50 cursor-pointer items-center rounded-2xl px-3 py-2.5 transition-colors duration-200 hover:bg-white/10 ${
-                isSelected ? 'border border-[#4338ca]/50 bg-white/10' : ''
+              className={`flex min-w-0 cursor-pointer items-center rounded-md border px-2 py-2 text-left transition-colors duration-200 hover:bg-white/8 focus:bg-white/8 focus:outline-none ${
+                isSelected ? 'border-[#77d970]/60 bg-white/10' : 'border-transparent'
               }`}
               onClick={() => state.selectArtist(artist.id, index)}
             >
-              <div className="mr-2.5">
-                <img className="h-7.5 w-7.5 rounded-full object-cover" src={`/img/${artist.avatar}`} alt="" />
-              </div>
-              <div className="flex flex-col">
-                <span className="text-[#f8fafc]">{artist.displayName}</span>
-                <span className="text-[0.9rem] text-white/50">{artist.lastPlayedLabel}</span>
-              </div>
-              <div className="ml-3.75">
-                {isSelected ? <img className="h-5 w-5" src="/icon/list.gif" alt="" /> : null}
-              </div>
-            </div>
+              <img
+                className="mr-2 h-9 w-9 shrink-0 rounded-md object-cover"
+                src={resolveMediaSrc(artist.avatar, '/img')}
+                alt=""
+              />
+              <span className="flex min-w-0 flex-1 flex-col">
+                <span className="truncate text-sm font-semibold text-[#f4f0e8]">{artist.displayName}</span>
+                <span className="truncate text-xs text-white/45">{artist.lastPlayedLabel}</span>
+              </span>
+              {isSelected ? <img className="ml-2 h-5 w-5 shrink-0" src="/icon/list.gif" alt="" /> : null}
+            </button>
           )
         })}
       </div>
-    </>
+    </section>
   )
 }

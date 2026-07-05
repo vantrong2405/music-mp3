@@ -1,5 +1,6 @@
 import { usePlayerStore } from '../../../stores/player.store'
 import { songs } from '../../../data/songs'
+import { resolveMediaSrc } from '../../../utils/media'
 
 export function RecentPlayed() {
   const state = usePlayerStore()
@@ -8,32 +9,39 @@ export function RecentPlayed() {
     .filter(({ song }) => song.artist === state.selectedArtist)
 
   return (
-    <>
-      <h3 className="font-heading mt-5 bg-gradient-to-r from-[#f8fafc] to-[#a5b4fc] bg-clip-text text-transparent">
-        {state.mode === 'artist' ? 'Top song of singer' : 'Recent Played'}
-      </h3>
-      <div className="mt-2.5 mb-12.5 flex overflow-x-scroll [scrollbar-color:#4338ca_transparent] [scrollbar-width:thin]">
+    <section className="mt-5">
+      <div className="mb-2 flex items-end justify-between gap-3">
+        <div>
+          <p className="text-xs font-bold tracking-[0.22em] text-white/40 uppercase">Artist shelf</p>
+          <h2 className="text-xl font-black text-white">
+            {state.mode === 'artist' ? 'Top song of singer' : 'Recent Played'}
+          </h2>
+        </div>
+        <span className="text-sm font-semibold text-white/45">{filtered.length} songs</span>
+      </div>
+
+      <div className="flex gap-3 overflow-x-auto pb-3 [scrollbar-color:#77d970_transparent] [scrollbar-width:thin]">
         {filtered.map(({ song, globalIndex }, position) => (
-          <div
+          <button
+            type="button"
             key={song.nameFile}
-            className="mb-2.5 w-37.5 cursor-pointer p-1.25"
+            className="w-38 shrink-0 cursor-pointer rounded-lg border border-white/8 bg-[#101112] p-2 text-left transition-colors duration-200 hover:bg-white/8 focus:bg-white/8 focus:outline-none"
             onClick={() => state.playArtistSong(globalIndex, position)}
           >
-            <div>
-              <img
-                className={`h-37.5 w-37.5 rounded-2xl object-cover transition-shadow duration-200 ${
-                  state.mode === 'artist' && state.artistSongPosition === position
-                    ? 'shadow-[0_0_0_2px_#22c55e]'
-                    : 'shadow-md'
-                }`}
-                src={`/img/${song.img}`}
-                alt=""
-              />
-            </div>
-            <div className="mx-2.5 my-1.25 text-[0.9rem] font-medium text-[#f8fafc]">{song.nameSong}</div>
-          </div>
+            <img
+              className={`aspect-square w-full rounded-md object-cover transition-shadow duration-200 ${
+                state.mode === 'artist' && state.artistSongPosition === position
+                  ? 'shadow-[0_0_0_3px_rgba(119,217,112,0.7)]'
+                  : 'shadow-[0_8px_22px_rgba(0,0,0,0.26)]'
+              }`}
+              src={resolveMediaSrc(song.img, '/img')}
+              alt=""
+            />
+            <span className="mt-2 block truncate text-sm font-semibold text-[#f4f0e8]">{song.nameSong}</span>
+            <span className="block truncate text-xs text-white/45">{song.nameArtist}</span>
+          </button>
         ))}
       </div>
-    </>
+    </section>
   )
 }

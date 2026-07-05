@@ -1,11 +1,13 @@
-export type ArtistId = 'sontung' | 'amee' | 'dinhdung' | 'ttbinh' | 'ducphuc'
+export type ArtistId = 'taylor' | 'weeknd' | 'dualipa' | 'edsheeran' | 'billie'
 
 export interface Song {
   nameSong: string
   nameArtist: string
-  /** relative to /musics/ */
+  /** relative to /musics/ when previewUrl is absent */
   nameFile: string
-  /** relative to /img/ */
+  /** official remote audio preview */
+  previewUrl?: string
+  /** relative to /img/ or absolute artwork URL */
   img: string
   /** present on listSongOf entries, absent on topSong entries */
   artist?: ArtistId
@@ -16,7 +18,7 @@ export interface Song {
 export interface Artist {
   id: ArtistId
   displayName: string
-  /** relative to /img/ */
+  /** relative to /img/ or absolute artwork URL */
   avatar: string
   /** static decorative text from the original markup, not computed */
   lastPlayedLabel: string

@@ -5,14 +5,15 @@ import { usePlayerStore } from '../../../stores/player.store'
 import { initialPlayerState } from '../../../types/player'
 
 beforeEach(() => {
+  localStorage.clear()
   usePlayerStore.setState(initialPlayerState)
 })
 
 describe('PlayerBar', () => {
   it('shows the current top song name and artist', () => {
     render(<PlayerBar />)
-    expect(screen.getByText('Anh sai rồi')).toBeInTheDocument()
-    expect(screen.getByText('Sơn Tùng')).toBeInTheDocument()
+    expect(screen.getByText('Blinding Lights')).toBeInTheDocument()
+    expect(screen.getByText('The Weeknd')).toBeInTheDocument()
   })
 
   it('toggles play/pause icon on click', () => {
@@ -36,5 +37,15 @@ describe('PlayerBar', () => {
     const repeatBtn = screen.getByTestId('repeat')
     fireEvent.click(repeatBtn)
     expect(usePlayerStore.getState().isRepeat).toBe(true)
+  })
+
+  it('favorites the current song from the player', () => {
+    render(<PlayerBar />)
+    const favoriteBtn = screen.getByTestId('favorite-current')
+
+    fireEvent.click(favoriteBtn)
+
+    expect(usePlayerStore.getState().favoriteSongIds).toContain('weeknd/blinding-lights.m4a')
+    expect(favoriteBtn).toHaveAttribute('aria-pressed', 'true')
   })
 })

@@ -1,9 +1,10 @@
 import type { Artist } from '../types/song'
+import { songs } from './songs'
 
 export const artists: Artist[] = [
-  { id: 'sontung', displayName: 'Sơn Tùng', avatar: 'sontung/ava.jpg', lastPlayedLabel: '3 minutes ago' },
-  { id: 'amee', displayName: 'AMEE', avatar: 'amee/ava.webp', lastPlayedLabel: '1 minutes ago' },
-  { id: 'dinhdung', displayName: 'Đình Dũng', avatar: 'dinhdung/ava.jpg', lastPlayedLabel: '4 minutes ago' },
-  { id: 'ttbinh', displayName: 'Trịnh Thăng Bình', avatar: 'ttbinh/ava.jpg', lastPlayedLabel: '2 minutes ago' },
-  { id: 'ducphuc', displayName: 'Đức Phúc', avatar: 'ducphuc/ava.jpg', lastPlayedLabel: '6 minutes ago' },
+  { id: 'taylor', displayName: 'Taylor Swift', avatar: songs[0].img, lastPlayedLabel: '4 Taylor previews' },
+  { id: 'weeknd', displayName: 'The Weeknd', avatar: songs[4].img, lastPlayedLabel: '4 Weeknd previews' },
+  { id: 'dualipa', displayName: 'Dua Lipa', avatar: songs[8].img, lastPlayedLabel: '4 Dua Lipa previews' },
+  { id: 'edsheeran', displayName: 'Ed Sheeran', avatar: songs[12].img, lastPlayedLabel: '4 Ed previews' },
+  { id: 'billie', displayName: 'Billie Eilish', avatar: songs[16].img, lastPlayedLabel: '4 Billie previews' },
 ]

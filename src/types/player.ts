@@ -23,12 +23,13 @@ export interface PlayerState {
   volume: number
   isMuted: boolean
   isMobile: boolean
+  favoriteSongIds: string[]
 }
 
 export const initialPlayerState: PlayerState = {
   mode: 'top',
   topSongIndex: 0,
-  selectedArtist: 'sontung',
+  selectedArtist: 'taylor',
   selectedArtistIndex: 0,
   artistSongGlobalIndex: 0,
   artistSongPosition: 0,
@@ -42,4 +43,5 @@ export const initialPlayerState: PlayerState = {
   volume: 100,
   isMuted: false,
   isMobile: false,
+  favoriteSongIds: [],
 }
