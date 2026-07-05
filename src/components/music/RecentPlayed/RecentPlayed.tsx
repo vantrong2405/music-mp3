@@ -9,8 +9,10 @@ export function RecentPlayed() {
 
   return (
     <>
-      <h3 className="mt-5">{state.mode === 'artist' ? 'Top song of singer' : 'Recent Played'}</h3>
-      <div className="mt-2.5 mb-12.5 flex overflow-x-scroll [scrollbar-color:#6969dd_#e0e0e0] [scrollbar-width:thin]">
+      <h3 className="font-heading mt-5 text-[#f8fafc]">
+        {state.mode === 'artist' ? 'Top song of singer' : 'Recent Played'}
+      </h3>
+      <div className="mt-2.5 mb-12.5 flex overflow-x-scroll [scrollbar-color:#4338ca_transparent] [scrollbar-width:thin]">
         {filtered.map(({ song, globalIndex }, position) => (
           <div
             key={song.nameFile}
@@ -19,16 +21,16 @@ export function RecentPlayed() {
           >
             <div>
               <img
-                className={`h-37.5 w-37.5 rounded-[15px] object-cover ${
+                className={`h-37.5 w-37.5 rounded-2xl object-cover transition-shadow duration-200 ${
                   state.mode === 'artist' && state.artistSongPosition === position
-                    ? 'shadow-[0px_14px_15px_rgba(0,0,0,0.15)]'
-                    : ''
+                    ? 'shadow-[0_0_0_2px_#22c55e]'
+                    : 'shadow-md'
                 }`}
                 src={`/img/${song.img}`}
                 alt=""
               />
             </div>
-            <div className="mx-2.5 my-1.25 text-[0.9rem] font-semibold">{song.nameSong}</div>
+            <div className="mx-2.5 my-1.25 text-[0.9rem] font-medium text-[#f8fafc]">{song.nameSong}</div>
           </div>
         ))}
       </div>

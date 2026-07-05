@@ -10,9 +10,9 @@ export function PlayerBar() {
   }
 
   return (
-    <div className="fixed bottom-0 left-0 flex w-full flex-col items-center justify-center bg-linear-to-r from-[rgba(225,237,250,1)] to-[rgba(247,238,242,1)]">
+    <div className="fixed bottom-0 left-0 flex w-full flex-col items-center justify-center border-t border-white/10 bg-[#0F0F23]/80 backdrop-blur-xl">
       <div className="mt-0 flex w-1/2 justify-between max-[46.1875em]:w-full">
-        <div className="mt-3.25 ml-2.5">{formatTimer(audioRef.current?.currentTime ?? 0)}</div>
+        <div className="mt-3.25 ml-2.5 text-white/60">{formatTimer(audioRef.current?.currentTime ?? 0)}</div>
         <input
           type="range"
           step={1}
@@ -21,7 +21,7 @@ export function PlayerBar() {
           max={audioRef.current?.duration || 0}
           onChange={handleSeek}
         />
-        <div className="mt-3.25 mr-2.5">{formatTimer(audioRef.current?.duration ?? 0)}</div>
+        <div className="mt-3.25 mr-2.5 text-white/60">{formatTimer(audioRef.current?.duration ?? 0)}</div>
       </div>
 
       <audio ref={audioRef} />
@@ -32,46 +32,52 @@ export function PlayerBar() {
             <img className="h-12.5 w-12.5 rounded-[10px] object-cover" src={`/img/${currentSong.img}`} alt="" />
           </div>
           <div className="max-[46.1875em]:hidden">
-            <div className="font-bold">{currentSong.nameSong}</div>
-            <div>{currentSong.nameArtist}</div>
+            <div className="font-semibold text-[#f8fafc]">{currentSong.nameSong}</div>
+            <div className="text-white/50">{currentSong.nameArtist}</div>
           </div>
         </div>
 
         <div className="mt-2.5 mr-25 flex">
           <div
             data-testid="random"
-            className="mt-2 mr-8.75 cursor-pointer text-[1.3rem]"
-            style={{ color: state.isRandom ? 'green' : 'black' }}
+            aria-label="Toggle shuffle"
+            className={`mt-2 mr-8.75 cursor-pointer text-[1.3rem] transition-colors duration-200 ${
+              state.isRandom ? 'text-[#22c55e]' : 'text-white/60'
+            }`}
             onClick={toggleRandom}
           >
             <i className="fa-solid fa-shuffle" />
           </div>
           <div
             data-testid="back"
-            className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-[#3e4042]"
+            aria-label="Previous"
+            className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-white/70 transition-colors duration-200 hover:text-[#f8fafc]"
             onClick={prev}
           >
             <i className="fa-solid fa-backward-fast" />
           </div>
           <div
             data-testid="pause"
-            className="mx-7.5 cursor-pointer text-[2.1rem]"
-            style={{ color: 'rgb(5, 165, 67)' }}
+            aria-label="Play/Pause"
+            className="mx-7.5 cursor-pointer text-[2.1rem] text-[#22c55e] transition-colors duration-200 hover:text-[#4ade80]"
             onClick={() => state.togglePlay()}
           >
             <i className={state.isPlaying ? 'fa-solid fa-circle-pause' : 'fa-solid fa-circle-play'} />
           </div>
           <div
             data-testid="next"
-            className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-[#3e4042]"
+            aria-label="Next"
+            className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-white/70 transition-colors duration-200 hover:text-[#f8fafc]"
             onClick={next}
           >
             <i className="fa-solid fa-forward-fast" />
           </div>
           <div
             data-testid="repeat"
-            className="mt-2.25 ml-8.75 cursor-pointer text-[1.3rem]"
-            style={{ color: state.isRepeat ? 'green' : 'black' }}
+            aria-label="Toggle repeat"
+            className={`mt-2.25 ml-8.75 cursor-pointer text-[1.3rem] transition-colors duration-200 ${
+              state.isRepeat ? 'text-[#22c55e]' : 'text-white/60'
+            }`}
             onClick={() => state.toggleRepeat()}
           >
             <i className="fa-solid fa-repeat" />
@@ -81,7 +87,8 @@ export function PlayerBar() {
         <div className="mt-3.75 mr-2.5 flex max-[46.1875em]:hidden">
           <div
             data-testid="vol-icon"
-            className="mt-0.75 mr-2.5 cursor-pointer text-[1.2rem]"
+            aria-label="Toggle mute"
+            className="mt-0.75 mr-2.5 cursor-pointer text-[1.2rem] text-white/60"
             onClick={() => state.toggleMute()}
           >
             <i className={state.isMuted ? 'fa-solid fa-volume-slash' : 'fa-solid fa-volume-high'} />

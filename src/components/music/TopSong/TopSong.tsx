@@ -6,12 +6,12 @@ export function TopSong() {
 
   return (
     <>
-      <h2 className="mb-2 text-2xl">Top Song 2022</h2>
+      <h2 className="font-heading mb-2 text-2xl text-[#f8fafc]">Top Song 2022</h2>
       <div className="flex max-[46.1875em]:flex-col max-[46.1875em]:items-center">
         <div>
           <img
             data-testid="top-thumb"
-            className={`h-62.5 w-62.5 rounded-[20px] object-cover shadow-[0px_6px_15px_rgba(0,0,0,0.15)] transition-[0.3s] max-[46.1875em]:mb-3.75 ${
+            className={`h-62.5 w-62.5 rounded-[20px] object-cover shadow-lg transition-[0.3s] max-[46.1875em]:mb-3.75 ${
               state.mode === 'top' && state.isPlaying ? 'rotate-play' : ''
             }`}
             src={`/img/${currentSong.img}`}
@@ -25,24 +25,24 @@ export function TopSong() {
               <div
                 key={song.nameFile}
                 data-testid="top-song-row"
-                className={`mb-1.25 flex cursor-pointer flex-row justify-between rounded-[15px] p-2.5 hover:bg-white ${
-                  isActive ? 'bg-white' : ''
+                className={`mb-1.25 flex cursor-pointer flex-row justify-between rounded-2xl p-2.5 transition-colors duration-200 hover:bg-white/10 ${
+                  isActive ? 'border border-[#22c55e]/40 bg-white/10' : ''
                 }`}
                 onClick={() => state.playTopSong(index)}
               >
                 <div className="flex">
-                  <div className="mt-2.5 font-bold text-[#c6c7d2]">
+                  <div className="mt-2.5 font-bold text-white/40">
                     {isActive ? <img className="h-5 w-5" src="/icon/wave.gif" alt="" /> : index + 1}
                   </div>
-                  <div className="mx-3.75 mt-2.5 font-bold">
+                  <div className="mx-3.75 mt-2.5 font-bold text-white/60">
                     <i className="fa-regular fa-heart" />
                   </div>
                   <div>
-                    <div className="font-bold">{song.nameSong}</div>
-                    <div className="text-[0.9rem]">{song.nameArtist}</div>
+                    <div className="font-semibold text-[#f8fafc]">{song.nameSong}</div>
+                    <div className="text-[0.9rem] text-white/50">{song.nameArtist}</div>
                   </div>
                 </div>
-                <div className={isActive ? 'text-black' : 'text-[#c4c4d5]'}>{song.time}</div>
+                <div className={isActive ? 'text-[#22c55e]' : 'text-white/40'}>{song.time}</div>
               </div>
             )
           })}
