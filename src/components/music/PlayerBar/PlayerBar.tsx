@@ -1,5 +1,6 @@
 import { usePlayerEngine } from '../../../hooks/usePlayerEngine'
 import { formatTimer } from '../../../utils/formatTimer'
+import { topSongs } from '../../../data/topSongs'
 
 export function PlayerBar() {
   const { state, audioRef, currentSong } = usePlayerEngine()
@@ -41,7 +42,11 @@ export function PlayerBar() {
           <div className="mt-2 mr-8.75 text-[1.3rem]" style={{ color: state.isRandom ? 'green' : 'black' }}>
             <i className="fa-light fa-shuffle" />
           </div>
-          <div className="mt-1.25 p-0.5 text-[1.4rem] text-[#3e4042]">
+          <div
+            data-testid="back"
+            className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-[#3e4042]"
+            onClick={() => state.prevTopSong(topSongs.length)}
+          >
             <i className="fa-solid fa-backward-fast" />
           </div>
           <div
@@ -52,7 +57,11 @@ export function PlayerBar() {
           >
             <i className={state.isPlaying ? 'fa-sharp fa-solid fa-circle-pause' : 'fa-solid fa-circle-play'} />
           </div>
-          <div className="mt-1.25 p-0.5 text-[1.4rem] text-[#3e4042]">
+          <div
+            data-testid="next"
+            className="mt-1.25 cursor-pointer p-0.5 text-[1.4rem] text-[#3e4042]"
+            onClick={() => state.nextTopSong(topSongs.length)}
+          >
             <i className="fa-solid fa-forward-fast" />
           </div>
           <div

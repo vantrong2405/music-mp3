@@ -9,6 +9,8 @@ interface PlayerActions {
   toggleRepeat: () => void
   setMobile: (isMobile: boolean) => void
   playTopSong: (index: number) => void
+  nextTopSong: (length: number) => void
+  prevTopSong: (length: number) => void
 }
 
 export const usePlayerStore = create<PlayerState & PlayerActions>((set) => ({
@@ -21,4 +23,8 @@ export const usePlayerStore = create<PlayerState & PlayerActions>((set) => ({
   toggleRepeat: () => set((state) => ({ isRepeat: !state.isRepeat })),
   setMobile: (isMobile) => set({ isMobile }),
   playTopSong: (index) => set({ mode: 'top', topSongIndex: index, isPlaying: true }),
+  nextTopSong: (length) =>
+    set((state) => ({ mode: 'top', topSongIndex: (state.topSongIndex + 1) % length, isPlaying: true })),
+  prevTopSong: (length) =>
+    set((state) => ({ mode: 'top', topSongIndex: (state.topSongIndex - 1 + length) % length, isPlaying: true })),
 }))
