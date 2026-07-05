@@ -25,19 +25,19 @@ export function Header() {
 
   return (
     <header className="relative flex items-center justify-between">
-      <div className="flex items-center gap-2.5 rounded-[10px] border border-white/10 bg-white/5 px-2.5 py-2 backdrop-blur-xl">
+      <div className="flex w-full max-w-125 items-center gap-2.5 rounded-full border border-white/10 bg-white/5 px-4 py-2.5 backdrop-blur-xl transition-colors duration-200 focus-within:border-[#22c55e]/50">
         <i className="fa-solid fa-magnifying-glass text-white/60" />
         <input
           type="text"
           placeholder="Search song or artist"
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          className="border-none bg-transparent text-[#f8fafc] placeholder:text-white/40 outline-none"
+          className="w-full border-none bg-transparent text-[#f8fafc] placeholder:text-white/40 outline-none"
         />
       </div>
 
       {results.length > 0 && (
-        <div className="absolute top-full left-0 z-20 mt-2 w-full max-w-100 rounded-2xl border border-white/10 bg-[#1e1b4b]/90 p-2 shadow-lg backdrop-blur-xl">
+        <div className="absolute top-full left-0 z-20 mt-2 w-full max-w-125 rounded-2xl border border-white/10 bg-[#1e1b4b]/90 p-2 shadow-lg backdrop-blur-xl">
           {results.map(({ song, globalIndex }) => (
             <div
               key={song.nameFile}

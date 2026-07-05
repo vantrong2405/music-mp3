@@ -6,7 +6,9 @@ export function AnotherSong() {
 
   return (
     <>
-      <h3 className="font-heading mt-5 text-[#f8fafc]">Another songs</h3>
+      <h3 className="font-heading mt-5 bg-gradient-to-r from-[#f8fafc] to-[#a5b4fc] bg-clip-text text-transparent">
+        Another songs
+      </h3>
       <div className="max-[46.1875em]:h-62.5 max-[46.1875em]:overflow-scroll">
         {state.anotherSongPool.map((songIndex, position) => {
           const song = songs[songIndex]

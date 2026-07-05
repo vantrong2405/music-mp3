@@ -6,7 +6,9 @@ export function ListArtist() {
 
   return (
     <>
-      <h3 className="font-heading mt-10 text-[#f8fafc]">Recent Singers</h3>
+      <h3 className="font-heading mt-10 bg-gradient-to-r from-[#f8fafc] to-[#a5b4fc] bg-clip-text text-transparent">
+        Recent Singers
+      </h3>
       <div>
         {artists.map((artist, index) => {
           const isSelected = state.selectedArtistIndex === index

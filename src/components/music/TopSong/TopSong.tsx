@@ -6,13 +6,17 @@ export function TopSong() {
 
   return (
     <>
-      <h2 className="font-heading mb-2 text-2xl text-[#f8fafc]">Top Song 2022</h2>
+      <h2 className="font-heading mb-2 bg-gradient-to-r from-[#f8fafc] to-[#a5b4fc] bg-clip-text text-2xl text-transparent">
+        Top Song 2022
+      </h2>
       <div className="flex max-[46.1875em]:flex-col max-[46.1875em]:items-center">
         <div>
           <img
             data-testid="top-thumb"
-            className={`h-62.5 w-62.5 rounded-[20px] object-cover shadow-lg transition-[0.3s] max-[46.1875em]:mb-3.75 ${
-              state.mode === 'top' && state.isPlaying ? 'rotate-play' : ''
+            className={`h-62.5 w-62.5 rounded-[20px] object-cover transition-[0.3s] max-[46.1875em]:mb-3.75 ${
+              state.mode === 'top' && state.isPlaying
+                ? 'rotate-play shadow-[0_0_40px_rgba(34,197,94,0.45)]'
+                : 'shadow-lg'
             }`}
             src={`/img/${currentSong.img}`}
             alt=""

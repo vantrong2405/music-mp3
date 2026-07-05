@@ -9,7 +9,7 @@ export function RecentPlayed() {
 
   return (
     <>
-      <h3 className="font-heading mt-5 text-[#f8fafc]">
+      <h3 className="font-heading mt-5 bg-gradient-to-r from-[#f8fafc] to-[#a5b4fc] bg-clip-text text-transparent">
         {state.mode === 'artist' ? 'Top song of singer' : 'Recent Played'}
       </h3>
       <div className="mt-2.5 mb-12.5 flex overflow-x-scroll [scrollbar-color:#4338ca_transparent] [scrollbar-width:thin]">
